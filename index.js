@@ -1,1 +1,7 @@
-const inquirer=require("inquirer")
+const inquirer = require("inquirer")
+
+const askManager = function(){
+    
+}
+
+askManager()
