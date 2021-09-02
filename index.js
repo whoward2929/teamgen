@@ -12,48 +12,8 @@ const  questions = [
     {type: 'list',  name: 'info', message:"What employee would you like to add?", choices:['intern','engineer','manager','none']},
     
 ]
-function addIntern(){
-    inquirer.prompt([
-        {
-        type: 'input',
-        name:'name',
-        message:'what is the interns name?',
-       
-},
-        {
-        type: 'input',
-        name:'id',
-        message:'what is the interns id?',
-       
-},
-        {
-        type: 'input',
-        name:'email',
-        message:'what is the interns email?',
-       
-},
-        {
-        type: 'input',
-        name:'school',
-        message:'what is the interns school?',
-       
-},
-    ]) .then((answers) => {
-        console.log (answers)
-        
-   
-     })
-     .catch((error) => {
-       if (error.isTtyError) {
-         // Prompt couldn't be rendered in the current environment
-       } 
-       
-       else {
-         console.log(error)
-   
-   
-      }})
-}
+
+
 function addIntern(){
     inquirer.prompt([
         {
@@ -138,30 +98,30 @@ function addEngineer(){
    
       }})
 }
-function addIntern(){
+function addManager(){
     inquirer.prompt([
         {
         type: 'input',
         name:'name',
-        message:'what is the interns name?',
+        message:'what is the managers name?',
        
 },
         {
         type: 'input',
         name:'id',
-        message:'what is the interns id?',
+        message:'what is the managers id?',
        
 },
         {
         type: 'input',
         name:'email',
-        message:'what is the interns email?',
+        message:'what is the managers email?',
        
 },
         {
         type: 'input',
-        name:'school',
-        message:'what is the interns school?',
+        name:'office number',
+        message:'what is the managers office number?',
        
 },
     ]) .then((answers) => {
@@ -194,10 +154,10 @@ inquirer.prompt(
           addIntern()
           break;
         case'engineer':
-          // code block
+          addEngineer()
           break;
         case'manager':
-          // code block
+         addManager()
           break;
         default:
           // code block
