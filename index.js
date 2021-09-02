@@ -3,6 +3,7 @@ const Engineer = require('./lib/Engineer');
 const Employee = require('./lib/Employee');
 const Intern = require('./lib/Intern');
 const inquirer = require('inquirer');
+const generateHTML = require ('./src/generateHTML');
 const fs = require ('fs');
 const path = require('path');
 const { callExpression } = require('@babel/types');
@@ -160,7 +161,7 @@ inquirer.prompt(
          addManager()
           break;
         default:
-          // code block
+          
       }
 
   })
@@ -175,3 +176,32 @@ inquirer.prompt(
 
     }
   });
+  
+  const writeFile = data => {
+    fs.writeFile('./dist/index.html', data, err => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+    })
+}
+const card = () => {
+  inquirer.prompt ({
+      type: 'list',
+      message: 'Would you like to add an employee?',
+      choices: ['engineer', 'intern', 'manager', 'No'],
+      name: 'choices'
+  })
+  .then(answer => {
+      if (answer.choices === 'Engineer') {
+          engineerData()
+      }
+      else if (answer.choices === 'Intern') {
+          internData()
+      }
+      else {
+          console.log(team)
+          writeFile(generateHTML(team))
+      }
+  })
+}
