@@ -9,29 +9,25 @@ const path = require('path');
 const { callExpression } = require('@babel/types');
 
 
-const  questions = [
-    {type: 'list',  name: 'info', message:"What employee would you like to add?", choices:['intern','engineer','manager','none']},
-    
-]
-
+const team = []
 
 function addIntern(){
     inquirer.prompt([
         {
         type: 'input',
-        name:'name',
+        name:'internName',
         message:'what is the interns name?',
        
 },
         {
         type: 'input',
-        name:'id',
+        name:'internId',
         message:'what is the interns id?',
        
 },
         {
         type: 'input',
-        name:'email',
+        name:'internEmail',
         message:'what is the interns email?',
        
 },
@@ -41,39 +37,34 @@ function addIntern(){
         message:'what is the interns school?',
        
 },
-    ]) .then((answers) => {
-        console.log (answers)
+    ]) .then (answer => {
+        
         
    
-     })
-     .catch((error) => {
-       if (error.isTtyError) {
-         // Prompt couldn't be rendered in the current environment
-       } 
-       
-       else {
-         console.log(error)
-   
-   
-      }})
-}
+     
+     const intern = new Intern (answer.internName, answer.internID, answer.internEmail, answer.school);
+      team.push(intern);
+      card();
+    })
+      }
+
 function addEngineer(){
     inquirer.prompt([
         {
         type: 'input',
-        name:'name',
+        name:'engineerName',
         message:'what is the engineer name?',
        
 },
         {
         type: 'input',
-        name:'id',
+        name:'engineerId',
         message:'what is the engineer id?',
        
 },
         {
         type: 'input',
-        name:'email',
+        name:'engineerEmail',
         message:'what is the engineer email?',
        
 },
@@ -83,99 +74,57 @@ function addEngineer(){
         message:'what is the engineers github?',
        
 },
-    ]) .then((answers) => {
-        console.log (answers)
+    ]) .then(answer => {
+        
         
    
-     })
-     .catch((error) => {
-       if (error.isTtyError) {
-         // Prompt couldn't be rendered in the current environment
-       } 
-       
-       else {
-         console.log(error)
+     
+     const engineer = new Engineer (answer.engineerName, answer.engineerID, answer.engineerEmail,answer.github);
+      team.push(engineer);
+      card();
+    })
    
-   
-      }})
-}
+      }
+
 function addManager(){
-    inquirer.prompt([
+    return inquirer.prompt([
         {
         type: 'input',
-        name:'name',
+        name:'managerName',
         message:'what is the managers name?',
        
 },
         {
         type: 'input',
-        name:'id',
+        name:'managerId',
         message:'what is the managers id?',
        
 },
         {
         type: 'input',
-        name:'email',
+        name:'managerEmail',
         message:'what is the managers email?',
        
 },
         {
         type: 'input',
-        name:'office number',
+        name:'officeNumber',
         message:'what is the managers office number?',
        
 },
-    ]) .then((answers) => {
-        console.log (answers)
-        
-   
-     })
-     .catch((error) => {
-       if (error.isTtyError) {
-         // Prompt couldn't be rendered in the current environment
-       } 
-       
-       else {
-         console.log(error)
-   
-   
-      }})
+    ]) 
+}
+
+const init = function () {
+  addManager().then (answer => {
+      const manager = new Manager (answer.managerName, answer.managerID, answer.managerEmail, answer.officeNumber);
+      team.push(manager);
+      card();
+  })
 }
 
 
 
-inquirer.prompt(
-    /* Do you want to add an employee */
-    questions
-  )
-  .then((answers) => {
-     console.log (answers.info)
-     switch(answers.info) {
-        case 'intern':
-          addIntern()
-          break;
-        case'engineer':
-          addEngineer()
-          break;
-        case'manager':
-         addManager()
-          break;
-        default:
-          
-      }
-
-  })
-  .catch((error) => {
-    if (error.isTtyError) {
-      // Prompt couldn't be rendered in the current environment
-    } 
-    
-    else {
-      console.log(error)
-
-
-    }
-  });
   
   const writeFile = data => {
     fs.writeFile('./dist/index.html', data, err => {
@@ -189,15 +138,15 @@ const card = () => {
   inquirer.prompt ({
       type: 'list',
       message: 'Would you like to add an employee?',
-      choices: ['engineer', 'intern', 'manager', 'No'],
+      choices: ['Engineer', 'Intern', 'No'],
       name: 'choices'
   })
   .then(answer => {
       if (answer.choices === 'Engineer') {
-          engineerData()
+          addEngineer()
       }
       else if (answer.choices === 'Intern') {
-          internData()
+          addIntern()
       }
       else {
           console.log(team)
@@ -205,3 +154,6 @@ const card = () => {
       }
   })
 }
+
+
+init();
